@@ -1,46 +1,74 @@
-# Getting Started with Create React App
+# Conversa Django
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An awesome Django chat app built with Django Channels
 
-## Available Scripts
+[![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
+[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-In the project directory, you can run:
+License: MIT
 
-### `npm start`
+## Settings
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Basic Commands
 
-### `npm test`
+### Setting Up Your Users
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
 
-### `npm run build`
+-   To create a **superuser account**, use this command:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+        $ python manage.py createsuperuser
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Type checks
 
-### `npm run eject`
+Running type checks with mypy:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    $ mypy conversa_dj
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Test coverage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+To run the tests, check your test coverage, and generate an HTML coverage report:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    $ coverage run -m pytest
+    $ coverage html
+    $ open htmlcov/index.html
 
-## Learn More
+#### Running tests with pytest
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    $ pytest
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Live reloading and Sass CSS compilation
+
+Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
+
+### Celery
+
+This app comes with Celery.
+
+To run a celery worker:
+
+``` bash
+cd conversa_dj
+celery -A config.celery_app worker -l info
+```
+
+Please note: For Celery's import magic to work, it is important *where* the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
+
+### Sentry
+
+Sentry is an error logging aggregator service. You can sign up for a free account at <https://sentry.io/signup/?code=cookiecutter> or download and host it yourself.
+The system is set up with reasonable defaults, including 404 logging and integration with the WSGI application.
+
+You must set the DSN url in production.
+
+## Deployment
+
+The following details how to deploy this application.
+
+### Docker
+
+See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
